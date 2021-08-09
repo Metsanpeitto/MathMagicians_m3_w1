@@ -52,7 +52,10 @@ class Calculator extends React.Component {
       const { total, next, operation } = this.state;
       const obj = { total, next, operation };
       const result = calculate(obj, option);
-      this.proccessResult(result);
+      this.setState(() => ({
+        total: result.total,
+        display: result.total,
+      }));
     }
 
     if (option === '=') {
@@ -71,7 +74,12 @@ class Calculator extends React.Component {
     let newTotal = total;
     const number = event.target.innerText;
     let numberResult = null;
-    if (display !== '0' && !next && !operation) {
+    let float = null;
+    if (total) {
+      float = total.indexOf('.');
+    }
+
+    if (display !== '0' && !next && !operation && !float) {
       newTotal = null;
     }
 
